@@ -50,12 +50,12 @@ def pc2npz(ivar=-1, datadir="data", quiet=True, trimall=True):
     grid = read_grid(datadir=datadir2, quiet=quiet)
     print(" ")
     
-    print("Reading var files (this might take a while) ...")
+    print("Reading {} (this might take a while) ...".format(varfile))
     print(" ")
     var = read_var(datadir=datadir, trimall=trimall, quiet=quiet, varfile=varfile)
     print(" ")
 
-    print("Reading pvar files (this might take a while) ...")
+    print("Reading {} (this might take a while) ...".format(pvarfile))
     print(" ")
     pvar = read_pvar(datadir=datadir2, varfile=pvarfile)
     print(" ")

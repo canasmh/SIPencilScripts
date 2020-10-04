@@ -47,7 +47,7 @@ def pc2npz(ivar=-1, datadir="data", quiet=True, trimall=True):
 
     print("Reading grid files")
     print(" ")
-    grid = read_grid(datadir=datadir2)
+    grid = read_grid(datadir=datadir2, quiet=quiet)
     print(" ")
     
     print("Reading var files (this might take a while) ...")

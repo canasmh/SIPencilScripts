@@ -1,1 +1,1 @@
-import pc2npz
+from . import pc2npz

@@ -86,7 +86,6 @@ def pc2npz(ivar=-1, datadir="data", quiet=True, trimall=True):
     np.savez("dim.npz", **dim_vars)
     print("...")
     print("...")
-    print("Finished...")
 
     print("Saving grid files as grid.npz")
     np.savez("gird.npz", **grid_vars)

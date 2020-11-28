@@ -1,4 +1,4 @@
-# $Id: pc2vtk.py 
+# $Id: pc2npz.py 
 #
 # Convert data from PencilCode format to npz files (Numpy zip file). 
 #
@@ -68,27 +68,27 @@ def pc2npz(ivar=-1, datadir="data", quiet=True, trimall=True):
     dim_vars = vars(dim)
 
     print("Saving time series as ts.npz")
-    np.savez("ts.npz", **ts_vars)
+    np.savez("ts{}.npz".format(ivar), **ts_vars)
     print("...")
     print("...")
 
     print("Saving var files as ff.npz")
-    np.savez("ff.npz", **var_vars)
+    np.savez("ff{}.npz".format(ivar), **var_vars)
     print("...")
     print("...")
 
     print("Saving pvar files as fp.npz")
-    np.savez("fp.npz", **pvar_vars)
+    np.savez("fp{}.npz".format(ivar), **pvar_vars)
     print("...")
     print("...")
 
     print("Saving dim files as dim.npz")
-    np.savez("dim.npz", **dim_vars)
+    np.savez("dim{}.npz".format(ivar), **dim_vars)
     print("...")
     print("...")
 
     print("Saving grid files as grid.npz")
-    np.savez("grid.npz", **grid_vars)
+    np.savez("grid{}.npz".format(ivar), **grid_vars)
     print("...")
     print("...")
     print("Finished...")

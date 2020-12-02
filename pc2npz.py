@@ -31,9 +31,19 @@ def pc2npz(ivar=-1, datadir="data", files="all", quiet=True, trimall=True):
     if ivar < 0:
         varfile  = "var.dat"
         pvarfile = "pvar.dat"
+        ts_file = "ts.npz"
+        dim_file = "dim.npz"
+        grid_file = "grid.npz"
+        ff_file = "ff.npz"
+        fp_file = "fp.npz"
     else:
         varfile  = "VAR" + str(ivar)
         pvarfile = "PVAR" + str(ivar)
+        ts_file = "ts{}.npz".format(ivar)
+        dim_file = "dim{}.npz".format(ivar)
+        grid_file = "grid{}.npz".format(ivar)
+        ff_file = "ff{}.npz".format(ivar)
+        fp_file = "fp{}.npz".format(ivar)
 
     if "ts" in files or "all" in files:
         print("Reading time series")
@@ -41,8 +51,8 @@ def pc2npz(ivar=-1, datadir="data", files="all", quiet=True, trimall=True):
         ts = read_ts(datadir=datadir2)
         print(" ")
         ts_vars = vars(ts)
-        print("Saving time series as ts{}.npz".format(ivar))
-        np.savez("ts{}.npz".format(ivar), **ts_vars)
+        print("Saving time series as {}".format(ts_file))
+        np.savez(ts_file, **ts_vars)
         print("...")
         print("...")
 
@@ -52,8 +62,8 @@ def pc2npz(ivar=-1, datadir="data", files="all", quiet=True, trimall=True):
         dim = read_dim(datadir=datadir2)
         print(" ")
         dim_vars = vars(dim)
-        print("Saving dim files as dim{}.npz".format(ivar))
-        np.savez("dim{}.npz".format(ivar), **dim_vars)
+        print("Saving dim files as {}".format(dim_file))
+        np.savez(dim_file, **dim_vars)
         print("...")
         print("...")
 
@@ -64,8 +74,8 @@ def pc2npz(ivar=-1, datadir="data", files="all", quiet=True, trimall=True):
         grid = read_grid(datadir=datadir2, quiet=quiet)
         print(" ")
         grid_vars = vars(grid)
-        print("Saving grid files as grid{}.npz".format(ivar))
-        np.savez("grid{}.npz".format(ivar), **grid_vars)
+        print("Saving grid files as {}".format(grid_file))
+        np.savez(grid_file, **grid_vars)
         print("...")
         print("...")
         print("Finished...")
@@ -76,8 +86,8 @@ def pc2npz(ivar=-1, datadir="data", files="all", quiet=True, trimall=True):
         var = read_var(datadir=datadir, trimall=trimall, quiet=quiet, varfile=varfile)
         print(" ")
         var_vars = vars(var)
-        print("Saving var files as ff{}.npz".format(ivar))
-        np.savez("ff{}.npz".format(ivar), **var_vars)
+        print("Saving var files as {}".format(ff_file))
+        np.savez(ff_file, **var_vars)
         print("...")
         print("...")
 
@@ -87,8 +97,8 @@ def pc2npz(ivar=-1, datadir="data", files="all", quiet=True, trimall=True):
         pvar = read_pvar(datadir=datadir2, varfile=pvarfile)
         print(" ")
         pvar_vars = vars(pvar)
-        print("Saving pvar files as fp{}.npz".format(ivar))
-        np.savez("fp{}.npz".format(ivar), **pvar_vars)
+        print("Saving pvar files as {}".format(fp_file))
+        np.savez(fp_file, **pvar_vars)
         print("...")
         print("...")
 

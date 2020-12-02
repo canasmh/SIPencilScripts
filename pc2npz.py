@@ -8,7 +8,7 @@ from pencil_old import read_var, read_pvar, read_dim, read_ts, read_grid
 import numpy as np
 
 
-def pc2npz(ivar=-1, datadir="data", quiet=True, trimall=True):
+def pc2npz(ivar=-1, datadir="data", files="all", quiet=True, trimall=True):
     """Convert pencil outputs to npz files.
 
     Pencil files can be extremely large, making it difficult to transfer files from a remote location to your local machine.
@@ -35,61 +35,60 @@ def pc2npz(ivar=-1, datadir="data", quiet=True, trimall=True):
         varfile  = "VAR" + str(ivar)
         pvarfile = "PVAR" + str(ivar)
 
-    print("Reading time series")
-    print(" ")
-    ts = read_ts(datadir=datadir2)
-    print(" ")
+    if "ts" in files or "all" in files:
+        print("Reading time series")
+        print(" ")
+        ts = read_ts(datadir=datadir2)
+        print(" ")
+        ts_vars = vars(ts)
+        print("Saving time series as ts.npz")
+        np.savez("ts{}.npz".format(ivar), **ts_vars)
+        print("...")
+        print("...")
 
-    print("Reading dim files")
-    print(" ")
-    dim = read_dim(datadir=datadir2)
-    print(" ")
+    if "dim" in files or "all" in files:
+        print("Reading dim files")
+        print(" ")
+        dim = read_dim(datadir=datadir2)
+        print(" ")
+        dim_vars = vars(dim)
+        print("Saving dim files as dim.npz")
+        np.savez("dim{}.npz".format(ivar), **dim_vars)
+        print("...")
+        print("...")
 
-    print("Reading grid files")
-    print(" ")
-    grid = read_grid(datadir=datadir2, quiet=quiet)
-    print(" ")
-    
-    print("Reading {} (this might take a while) ...".format(varfile))
-    print(" ")
-    var = read_var(datadir=datadir, trimall=trimall, quiet=quiet, varfile=varfile)
-    print(" ")
+    if "grid" in files or "all" in files:
 
-    print("Reading {} (this might take a while) ...".format(pvarfile))
-    print(" ")
-    pvar = read_pvar(datadir=datadir2, varfile=pvarfile)
-    print(" ")
+        print("Reading grid files")
+        print(" ")
+        grid = read_grid(datadir=datadir2, quiet=quiet)
+        print(" ")
+        grid_vars = vars(grid)
 
+    if "ff" in files or "all" in files:
+        print("Reading {} (this might take a while) ...".format(varfile))
+        print(" ")
+        var = read_var(datadir=datadir, trimall=trimall, quiet=quiet, varfile=varfile)
+        print(" ")
+        var_vars = vars(var)
+        print("Saving var files as ff.npz")
+        np.savez("ff{}.npz".format(ivar), **var_vars)
+        print("...")
+        print("...")
+        print("Saving grid files as grid.npz")
+        np.savez("grid{}.npz".format(ivar), **grid_vars)
+        print("...")
+        print("...")
+        print("Finished...")
 
-    ts_vars = vars(ts)
-    grid_vars = vars(grid)
-    var_vars = vars(var)
-    pvar_vars = vars(pvar)
-    dim_vars = vars(dim)
-
-    print("Saving time series as ts.npz")
-    np.savez("ts{}.npz".format(ivar), **ts_vars)
-    print("...")
-    print("...")
-
-    print("Saving var files as ff.npz")
-    np.savez("ff{}.npz".format(ivar), **var_vars)
-    print("...")
-    print("...")
-
-    print("Saving pvar files as fp.npz")
-    np.savez("fp{}.npz".format(ivar), **pvar_vars)
-    print("...")
-    print("...")
-
-    print("Saving dim files as dim.npz")
-    np.savez("dim{}.npz".format(ivar), **dim_vars)
-    print("...")
-    print("...")
-
-    print("Saving grid files as grid.npz")
-    np.savez("grid{}.npz".format(ivar), **grid_vars)
-    print("...")
-    print("...")
-    print("Finished...")
+    if "fp" in files or "all" in files:
+        print("Reading {} (this might take a while) ...".format(pvarfile))
+        print(" ")
+        pvar = read_pvar(datadir=datadir2, varfile=pvarfile)
+        print(" ")
+        pvar_vars = vars(pvar)
+        print("Saving pvar files as fp.npz")
+        np.savez("fp{}.npz".format(ivar), **pvar_vars)
+        print("...")
+        print("...")
 

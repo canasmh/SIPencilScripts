@@ -94,7 +94,7 @@ def pc2npz(ivar=-1, datadir="data", files="all", quiet=True, trimall=True):
     if "fp" in files or "all" in files:
         print("Reading {} (this might take a while) ...".format(pvarfile))
         print(" ")
-        pvar = read_pvar(datadir=datadir2, varfile=pvarfile)
+        pvar = read_pvar(datadir=datadir, varfile=pvarfile)
         print(" ")
         pvar_vars = vars(pvar)
         print("Saving pvar files as {}".format(fp_file))

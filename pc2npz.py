@@ -119,6 +119,7 @@ def read_ts(filename='time_series.dat', datadir = 'data', comment_char='#', quie
 
     data_dict = {}
     nlines = 1
+    keys_new = 0
     for line in lines:
 
         # Check if line is a header
@@ -134,10 +135,15 @@ def read_ts(filename='time_series.dat', datadir = 'data', comment_char='#', quie
                     data_dict[item]
                 except KeyError:
                     data_dict[item] = []
+
         else:
             data = line.split()
-            print(data)
+
+            for index, item in enumerate(keys_new):
+                data_dict[item].append(data[index])
             break
+
+        return data_dict
 
 
 

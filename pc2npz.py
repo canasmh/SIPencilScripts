@@ -6,6 +6,8 @@
 
 from pencil_old import read_var, read_pvar, read_dim, read_ts, read_grid
 import numpy as np
+import os.path
+import re
 
 
 def pc2npz(ivar=-1, datadir="data", files="all", quiet=True, trimall=True):
@@ -101,4 +103,37 @@ def pc2npz(ivar=-1, datadir="data", files="all", quiet=True, trimall=True):
         np.savez(fp_file, **pvar_vars)
         print("...")
         print("...")
+
+
+def read_ts(filename='time_series.dat', datadir = 'data', comment_char='#', quiet=True):
+
+    datadir = os.path.expanduser(datadir)
+    infile = open(os.path.join(datadir, filename), "r")
+    lines = infile.readlines()
+    infile.close()
+
+    nlines_init = len(lines)
+
+    if not quiet:
+        print("Reading {} lines".format(nlines_init))
+
+    data_dict = {}
+    nlines = 1
+    for line in lines:
+
+        # Check if line is a header
+        if re.search("^%s--" % comment_char, line):
+
+            # Read header
+            header = line.strip("%s-\n" % comment_char)
+            keys_new = re.split("-+", line)
+            print(keys_new)
+
+        else:
+            continue
+
+
+
+
+
 

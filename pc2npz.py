@@ -4,7 +4,7 @@
 #
 # Author: Manuel H. Canas (canasmh@nmsu.edu)
 
-from pencil_old import read_var, read_pvar, read_dim, read_ts, read_grid
+from pencil_old import read_var, read_pvar, read_dim, read_grid
 import numpy as np
 import os.path
 import re
@@ -50,7 +50,7 @@ def pc2npz(ivar=-1, datadir="data", files="all", quiet=True, trimall=True):
     if "ts" in files or "all" in files:
         print("Reading time series")
         print(" ")
-        ts = read_ts(datadir=datadir2)
+        ts = read_ts(datadir=datadir)
         print(" ")
         ts_vars = vars(ts)
         print("Saving time series as {}".format(ts_file))

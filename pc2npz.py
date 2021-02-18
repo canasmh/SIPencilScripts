@@ -50,7 +50,7 @@ def pc2npz(ivar=-1, datadir="data", files="all", quiet=True, trimall=True):
     if "ts" in files or "all" in files:
         print("Reading time series")
         print(" ")
-        ts = read_ts(datadir=datadir)
+        ts = ReadTimeSeries(datadir=datadir)
         print(" ")
         ts_vars = vars(ts)
         print("Saving time series as {}".format(ts_file))
@@ -105,7 +105,7 @@ def pc2npz(ivar=-1, datadir="data", files="all", quiet=True, trimall=True):
         print("...")
 
 
-class read_ts():
+class ReadTimeSeries:
 
     def __init__(self, filename='time_series.dat', datadir='data', comment_char='#', quiet=True):
 
@@ -132,15 +132,18 @@ class read_ts():
                 keys_new = re.split("-+", header)
                 print(keys_new)
 
+                # Add new items to dictionary
                 for item in keys_new:
                     try:
                         data_dict[item]
                     except KeyError:
                         data_dict[item] = []
 
+            # Read data
             else:
                 data = line.split()
 
+                # Append data value to corresponding key
                 for index, item in enumerate(keys_new):
                     data_dict[item].append(float(data[index]))
 
@@ -149,6 +152,7 @@ class read_ts():
             if not quiet:
                 print("Read {} out of {} lines.".format(nlines, nlines_init))
 
+        # Make data key and value class object attributes
         for key in data_dict.keys():
             setattr(self, key, data_dict[key])
 

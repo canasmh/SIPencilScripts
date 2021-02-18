@@ -143,7 +143,7 @@ def read_ts(filename='time_series.dat', datadir = 'data', comment_char='#', quie
                 data_dict[item].append(data[index])
             break
 
-        return data_dict
+    return data_dict
 
 
 

@@ -137,7 +137,7 @@ def read_ts(filename='time_series.dat', datadir = 'data', comment_char='#', quie
         else:
             data = line.split()
             print(data)
-            continue
+            break
 
 
 

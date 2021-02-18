@@ -130,7 +130,6 @@ class ReadTimeSeries:
                 # Read header
                 header = line.strip("%s-\n" % comment_char)
                 keys_new = re.split("-+", header)
-                print(keys_new)
 
                 # Add new items to dictionary
                 for item in keys_new:

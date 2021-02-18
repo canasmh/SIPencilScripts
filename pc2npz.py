@@ -105,49 +105,52 @@ def pc2npz(ivar=-1, datadir="data", files="all", quiet=True, trimall=True):
         print("...")
 
 
-def read_ts(filename='time_series.dat', datadir='data', comment_char='#', quiet=True):
+class read_ts():
 
-    datadir = os.path.expanduser(datadir)
-    infile = open(os.path.join(datadir, filename), "r")
-    lines = infile.readlines()
-    infile.close()
+    def __init__(self, filename='time_series.dat', datadir='data', comment_char='#', quiet=True):
 
-    nlines_init = len(lines)
+        datadir = os.path.expanduser(datadir)
+        infile = open(os.path.join(datadir, filename), "r")
+        lines = infile.readlines()
+        infile.close()
 
-    if not quiet:
-        print("Reading {} lines".format(nlines_init))
-
-    data_dict = {}
-    nlines = 1
-    keys_new = 0
-    for line in lines:
-
-        # Check if line is a header
-        if re.search("^%s--" % comment_char, line):
-
-            # Read header
-            header = line.strip("%s-\n" % comment_char)
-            keys_new = re.split("-+", header)
-            print(keys_new)
-
-            for item in keys_new:
-                try:
-                    data_dict[item]
-                except KeyError:
-                    data_dict[item] = []
-
-        else:
-            data = line.split()
-
-            for index, item in enumerate(keys_new):
-                data_dict[item].append(float(data[index]))
-
-        nlines += 1
+        nlines_init = len(lines)
 
         if not quiet:
-            print("Read {} out of {} lines.".format(nlines, nlines_init))
+            print("Reading {} lines".format(nlines_init))
 
-    return data_dict
+        data_dict = {}
+        nlines = 1
+        keys_new = 0
+        for line in lines:
+
+            # Check if line is a header
+            if re.search("^%s--" % comment_char, line):
+
+                # Read header
+                header = line.strip("%s-\n" % comment_char)
+                keys_new = re.split("-+", header)
+                print(keys_new)
+
+                for item in keys_new:
+                    try:
+                        data_dict[item]
+                    except KeyError:
+                        data_dict[item] = []
+
+            else:
+                data = line.split()
+
+                for index, item in enumerate(keys_new):
+                    data_dict[item].append(float(data[index]))
+
+            nlines += 1
+
+            if not quiet:
+                print("Read {} out of {} lines.".format(nlines, nlines_init))
+
+        for key in data_dict.keys():
+            setattr(self, key, data_dict[key])
 
 
 

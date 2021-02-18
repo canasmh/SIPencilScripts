@@ -105,7 +105,7 @@ def pc2npz(ivar=-1, datadir="data", files="all", quiet=True, trimall=True):
         print("...")
 
 
-def read_ts(filename='time_series.dat', datadir = 'data', comment_char='#', quiet=True):
+def read_ts(filename='time_series.dat', datadir='data', comment_char='#', quiet=True):
 
     datadir = os.path.expanduser(datadir)
     infile = open(os.path.join(datadir, filename), "r")
@@ -141,7 +141,11 @@ def read_ts(filename='time_series.dat', datadir = 'data', comment_char='#', quie
 
             for index, item in enumerate(keys_new):
                 data_dict[item].append(float(data[index]))
-            break
+
+        nlines += 1
+
+        if not quiet:
+            print("Read {} out of {} lines.".format(nlines, nlines_init))
 
     return data_dict
 

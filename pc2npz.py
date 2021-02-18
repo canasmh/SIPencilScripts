@@ -126,7 +126,7 @@ def read_ts(filename='time_series.dat', datadir = 'data', comment_char='#', quie
 
             # Read header
             header = line.strip("%s-\n" % comment_char)
-            keys_new = re.split("-+", line)
+            keys_new = re.split("-+", header)
             print(keys_new)
 
         else:

@@ -129,7 +129,14 @@ def read_ts(filename='time_series.dat', datadir = 'data', comment_char='#', quie
             keys_new = re.split("-+", header)
             print(keys_new)
 
+            for item in keys_new:
+                try:
+                    data_dict[item]
+                except KeyError:
+                    data_dict[item] = []
         else:
+            data = lines.split()
+            print(data)
             continue
 
 
